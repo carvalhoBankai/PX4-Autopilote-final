@@ -128,7 +128,6 @@ int race_thread_main(int argc, char **argv)
 
 	/* Return motor control variables */
 	roverControl motorControl;
-
 	/* Start condition of the race */
 	bool start = 0;		// Create your own start condition
 	#endif
@@ -171,6 +170,8 @@ int race_thread_main(int argc, char **argv)
 		att_sub.copy(&att);
 		roverSteerSpeed(motorControl, _att_sp, att);
 
+
+		printf("publishing...\n");
 		// Publishing all
 		_control_mode.timestamp = hrt_absolute_time();
 		_control_mode_pub.publish(_control_mode);

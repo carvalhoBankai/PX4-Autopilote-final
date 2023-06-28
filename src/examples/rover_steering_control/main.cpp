@@ -366,6 +366,7 @@ int rover_steering_control_thread_main(int argc, char *argv[])
 			}
 		}
 	}
+	
 
 	warnx("exiting, stopping all motors.");
 	thread_running = false;

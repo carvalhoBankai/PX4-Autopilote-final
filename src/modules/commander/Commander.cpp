@@ -1776,15 +1776,27 @@ Commander::run()
 			}
 		}
 
-		/* update safety topic */
+/* update safety topic */
 		const bool safety_updated = _safety_sub.updated();
 
 		if (safety_updated) {
 			const bool previous_safety_off = _safety.safety_off;
 
 			if (_safety_sub.copy(&_safety)) {
-				// disarm if safety is now on and still armed
-				if (_armed.armed && _safety.safety_switch_available && !_safety.safety_off) {
+				// arm if safety is now off and still disarmed
+				if (_safety.safety_switch_available && _safety.safety_off ){
+                
+					bool safety_arm_allowed = (_status.hil_state == vehicle_status_s::HIL_STATE_OFF);
+					if (safety_arm_allowed) {
+						_status_changed = true;
+						arm(arm_disarm_reason_t::SAFETY_BUTTON);
+					}
+
+					  
+				}
+				// disarm if safety is now on and still armed and in Joystick mode
+				if (_armed.armed && _safety.safety_switch_available && !_safety.safety_off &&
+				    (_status.rc_input_mode == vehicle_status_s::RC_IN_MODE_OFF)) {
 
 					bool safety_disarm_allowed = (_status.hil_state == vehicle_status_s::HIL_STATE_OFF);
 
@@ -1814,6 +1826,9 @@ Commander::run()
 				}
 			}
 		}
+
+
+
 
 		/* update vtol vehicle status*/
 		if (_vtol_vehicle_status_sub.updated()) {

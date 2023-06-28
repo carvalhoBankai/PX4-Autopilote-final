@@ -242,7 +242,7 @@ int16_t TPixy2<LinkType>::getSync()
 			if (j >= 4)
 			{
 #ifdef PIXY_DEBUG
-				PX4_ERR("error: no response");
+				PX4_ERR("error: no response verify pixi_uorb ... telecom vitesse...");
 #endif
 				return PIXY_RESULT_ERROR;
 			}

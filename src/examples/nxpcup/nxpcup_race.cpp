@@ -115,14 +115,15 @@ roverControl raceTrack(const pixy_vector_s &pixy)
 		first_call = true;
 		/* Following the main vector */
 		if (vec1.m_x1 > vec1.m_x0) {
-			x = (float)(vec1.m_x1 - vec1.m_x0) / (float)frameWidth;
-			y = (float)(vec1.m_y1 - vec1.m_y0) / (float)frameHeight;
+			x = (float)((float)(vec1.m_x1 - vec1.m_x0) / (float)frameWidth);
+			y = (float)((float)(vec1.m_y1 - vec1.m_y0) / (float)frameHeight);
 		} else {
-			x = (float)(vec1.m_x0 - vec1.m_x1) / (float)frameWidth;
-			y = (float)(vec1.m_y0 - vec1.m_y1) / (float)frameHeight;
+			x = (float)((float)(vec1.m_x0 - vec1.m_x1) / (float)frameWidth);
+			y = (float)((float)(vec1.m_y0 - vec1.m_y1) / (float)frameHeight);
 		}
 		if(vec1.m_x0 != vec1.m_x1){
-			control.steer = (-1) * x / y; // Gradient of the main vector
+			// control.steer = (-1) * x / y; // Gradient of the main vector
+			control.steer =  x / y; // Gradient of the main vector
 			control.speed = SPEED_NORMAL;
 		}else{
 			control.steer = 0.0;
